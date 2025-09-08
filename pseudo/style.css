@@ -1,0 +1,37 @@
+input[type="text"] {
+    border: 2px solid rgb(224, 11, 224);
+}
+input[type="password"] {
+    border: 3px solid rgb(45, 218, 26); 
+}
+
+ul > li{
+    color: blue;
+}
+
+h1+p{
+    font-size: 30px;
+    color: blueviolet;
+}
+
+a:hover{
+    color:cadetblue;
+}
+
+li:nth-child(3){
+    background-color: darkgreen;
+}
+div:not(.div){
+    border: 2px dashed red;
+}
+
+.demo ::before{
+    :content:"icon ";  
+}
+
+p::first-letter{
+    color: aquamarine;
+    font-size: larger;
+}
+
+
