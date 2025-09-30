@@ -1,0 +1,412 @@
+<!--
+Animated Birthday Wish - single-file HTML
+Save this as `birthday_wish.html` and open in a browser.
+To customize: change the NAME constant in the <script> section or replace the text in the <h1>.
+Designed for a romantic, animated birthday greeting.
+-->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Happy Birthday- for my love </title>
+    <style>
+        :root {
+            --bg1: #0f172a;
+            /* deep blue */
+            --bg2: #3b82f6;
+            /* soft blue */
+            --accent: #ff6b81;
+            /* pink */
+            --gold: #ffd166;
+            --glass: rgba(255, 255, 255, 0.08);
+            --card: rgba(255, 255, 255, 0.06);
+            --text: #fff;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background: radial-gradient(1200px 600px at 10% 10%, rgba(255, 107, 129, 0.06), transparent),
+                linear-gradient(160deg, var(--bg1), var(--bg2));
+            color: var(--text);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .stage {
+            width: 100%;
+            max-width: 980px;
+            min-height: 560px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02));
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(2, 6, 23, 0.6);
+            position: relative;
+            overflow: hidden;
+            padding: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* Floating balloons */
+        .balloon {
+            position: absolute;
+            bottom: -120px;
+            width: 90px;
+            height: 120px;
+            border-radius: 50% 50% 48% 48%/60% 60% 40% 40%;
+            opacity: 0.95;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            transform-origin: center bottom;
+            animation: floatUp 10s linear infinite;
+            box-shadow: inset -6px -10px 18px rgba(255, 255, 255, 0.08);
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -36px;
+            width: 2px;
+            height: 36px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0.2));
+            transform: translateX(-1px);
+            border-radius: 3px;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(-6deg)
+            }
+
+            50% {
+                transform: translateY(-40vh) rotate(8deg)
+            }
+
+            100% {
+                transform: translateY(-85vh) rotate(-6deg)
+            }
+        }
+
+        .b1 {
+            left: 8%;
+            background: linear-gradient(180deg, #ff8fab, #ff6b81);
+            animation-duration: 12s;
+            animation-delay: 0s
+        }
+
+        .b2 {
+            left: 24%;
+            width: 70px;
+            height: 90px;
+            background: linear-gradient(180deg, #ffd166, #ffb199);
+            animation-duration: 11s;
+            animation-delay: 1s
+        }
+
+        .b3 {
+            right: 20%;
+            background: linear-gradient(180deg, #8be9ff, #3be7b5);
+            animation-duration: 13s;
+            animation-delay: 0.6s
+        }
+
+        .b4 {
+            right: 6%;
+            width: 74px;
+            height: 100px;
+            background: linear-gradient(180deg, #c084fc, #a78bfa);
+            animation-duration: 14s;
+            animation-delay: 2s
+        }
+
+        /* Confetti canvas sits in background */
+        #confetti {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 28px 34px;
+            width: 86%;
+            max-width: 780px;
+            text-align: center;
+            backdrop-filter: blur(6px) saturate(120%);
+            box-shadow: 0 6px 26px rgba(2, 6, 23, 0.45);
+        }
+
+        h1 {
+            margin: 6px 0 6px 0;
+            font-size: 2.4rem;
+            letter-spacing: 1px;
+            line-height: 1.05;
+        }
+
+        p.lead {
+            margin: 0 0 12px 0;
+            opacity: 0.95
+        }
+
+        .heart {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 14px auto;
+            transform-origin: center center;
+            animation: beat 1.1s ease-in-out infinite;
+        }
+
+        @keyframes beat {
+            0% {
+                transform: scale(0.95)
+            }
+
+            50% {
+                transform: scale(1.12)
+            }
+
+            100% {
+                transform: scale(0.95)
+            }
+        }
+
+        /* Typing message */
+        .message {
+            font-size: 1.05rem;
+            max-width: 720px;
+            margin: 14px auto 8px auto;
+            min-height: 52px;
+        }
+
+        .typing {
+            display: inline-block;
+            border-right: 3px solid rgba(255, 255, 255, 0.75);
+            padding-right: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        /* Button */
+        .btn {
+            margin-top: 12px;
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+            color: #111827;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 8px 30px rgba(255, 107, 129, 0.12);
+            transform: translateY(0);
+            transition: transform .18s ease, box-shadow .18s ease;
+        }
+
+        .btn:active {
+            transform: translateY(2px)
+        }
+
+        /* fireworks burst */
+        .fireworks {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        /* footer small */
+        .small {
+            font-size: 0.8rem;
+            opacity: 0.78
+        }
+
+        /* responsive tweaks */
+        @media (max-width:520px) {
+            .stage {
+                padding: 18px
+            }
+
+            h1 {
+                font-size: 1.6rem
+            }
+
+            .card {
+                padding: 18px
+            }
+
+            .heart {
+                width: 72px;
+                height: 72px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stage" role="main" aria-label="Birthday greeting">
+        <canvas id="confetti"></canvas>
+
+        <div class="balloon b1"></div>
+        <div class="balloon b2"></div>
+        <div class="balloon b3"></div>
+        <div class="balloon b4"></div>
+
+        <div class="card">
+            <!-- heart SVG -->
+            <svg class="heart" viewBox="0 0 32 29" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                <path fill="url(#g)"
+                    d="M23.6 0c-2.5 0-4.7 1.5-5.6 3.6C16.1 1.5 13.9 0 11.4 0 5.9 0 1.6 4.7 1.6 10.4c0 6.9 9.1 12.1 14.6 17.1l1.4 1.1 1.4-1.1C21.9 22.5 31 17.3 31 10.4 31 4.7 26.7 0 23.6 0z" />
+                <defs>
+                    <linearGradient id="g" x1="0" x2="1">
+                        <stop offset="0" stop-color="#ff6b81" />
+                        <stop offset="1" stop-color="#ffd166" />
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <h1 id="title">Happy Birthday, my love!</h1>
+            <p class="lead">Today is all about you — laughter, soft hugs, and endless candies of joy.</p>
+
+            <div class="message"><span id="typed" class="typing" aria-live="polite"></span></div>
+
+            <a class="btn" id="surpriseBtn">Show surprise ✨</a>
+            <div class="small" style="margin-top:10px">Made with ❤️ — open in a browser (works offline)</div>
+        </div>
+
+        <div class="fireworks" id="fireworksArea"></div>
+    </div>
+
+    <script>
+        // === User-editable name/message ===
+        const NAME = 'My Love'; // change this to the name you want (e.g. 'Yash')
+        const LINES = [
+            `To ${NAME},`,
+            `Every moment with you is a favorite memory.`,
+            `May your day be as lovely and bright as your smile.`,
+            `I love you, now and always. Happy Birthday! 🎂💖`
+        ];
+
+        // Typing effect
+        const typedEl = document.getElementById('typed');
+        let lineIndex = 0;
+        let charIndex = 0;
+        function typeNext() {
+            if (lineIndex >= LINES.length) return;
+            const line = LINES[lineIndex];
+            typedEl.textContent = line.slice(0, charIndex + 1);
+            charIndex++;
+            if (charIndex >= line.length) {
+                lineIndex++;
+                charIndex = 0;
+                setTimeout(typeNext, 900);
+            } else {
+                setTimeout(typeNext, 60 + Math.random() * 40);
+            }
+        }
+        setTimeout(typeNext, 700);
+
+        // Confetti
+        (function () {
+            const canvas = document.getElementById('confetti');
+            const ctx = canvas.getContext('2d');
+            let w, h, particles = [];
+            function resize() { w = canvas.width = innerWidth; h = canvas.height = innerHeight; }
+            addEventListener('resize', resize);
+            resize();
+
+            function rand(min, max) { return Math.random() * (max - min) + min }
+            function resetParticle(p) {
+                p.x = rand(0, w);
+                p.y = rand(-h, 0);
+                p.r = rand(6, 10);
+                p.d = rand(10, 30);
+                p.tilt = rand(-10, 10);
+                p.color = ['#ff6b81', '#ffd166', '#8be9ff', '#c084fc'][Math.floor(rand(0, 4))];
+            }
+            for (let i = 0; i < 120; i++) { let p = {}; resetParticle(p); particles.push(p); }
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                particles.forEach((p, i) => {
+                    p.y += Math.cos(p.d) + 1 + p.r / 8;
+                    p.tilt += Math.sin(p.d) * 0.1;
+                    p.x += Math.sin(p.d);
+                    if (p.y > h + 20) resetParticle(p);
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.tilt * Math.PI / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 1.6);
+                    ctx.restore();
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        })();
+
+        // Fireworks burst on button press
+        document.getElementById('surpriseBtn').addEventListener('click', () => {
+            burst();
+        });
+
+        function burst() {
+            const area = document.getElementById('fireworksArea');
+            const cx = area.clientWidth / 2;
+            const cy = area.clientHeight / 3;
+            for (let i = 0; i < 18; i++) { createBlast(cx + (Math.random() * 300 - 150), cy + (Math.random() * 80 - 40)); }
+        }
+        function createBlast(x, y) {
+            const el = document.createElement('div');
+            el.style.position = 'absolute';
+            el.style.left = (x) + 'px';
+            el.style.top = (y) + 'px';
+            el.style.width = '6px'; el.style.height = '6px';
+            el.style.borderRadius = '3px';
+            el.style.pointerEvents = 'none';
+            el.style.opacity = '1';
+            el.style.transform = 'translate(-50%,-50%)';
+            el.style.background = ['#ff6b81', '#ffd166', '#8be9ff', '#c084fc'][Math.floor(Math.random() * 4)];
+
+            document.getElementById('fireworksArea').appendChild(el);
+            const ttl = 900 + Math.random() * 600;
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 80 + Math.random() * 160;
+            const vx = Math.cos(angle) * speed;
+            const vy = Math.sin(angle) * speed;
+            const start = performance.now();
+            function frame(t) {
+                const dt = (t - start) / 1000;
+                el.style.left = (x + vx * dt) + 'px';
+                el.style.top = (y + vy * dt + 40 * dt * dt) + 'px';
+                el.style.opacity = String(1 - dt / (ttl / 1000));
+                if (t - start < ttl) { requestAnimationFrame(frame); } else { el.remove(); }
+            }
+            requestAnimationFrame(frame);
+        }
+
+        // small accessibility: reveal name in title
+        document.getElementById('title').textContent = `Happy Birthday, ${NAME}!`;
+
+        // auto surprise after a while
+        setTimeout(() => { document.getElementById('surpriseBtn').click(); }, 3800);
+    </script>
+</body>
+
+</html>
